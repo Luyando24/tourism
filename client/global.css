@@ -1,0 +1,230 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Zambian-inspired color scheme
+   * Copper, emerald green, golden yellow theme
+   */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 13% 14%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 14%;
+
+    /* Zambian copper-inspired primary */
+    --primary: 18 85% 47%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 13% 91%;
+    --secondary-foreground: 220 13% 14%;
+
+    --muted: 220 13% 91%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Zambian emerald green accent */
+    --accent: 158 64% 52%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 1 75% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 96%;
+    --ring: 18 85% 47%;
+
+    --radius: 0.75rem;
+
+    --surface-soft: 220 13% 98%;
+    --surface-strong: 220 13% 14%;
+    
+    /* Zambian-inspired gradients */
+    --hero-fade: 18 85% 47%;
+    --hero-glow: 158 64% 52%;
+    
+    /* Golden yellow for highlights */
+    --zambian-gold: 45 93% 58%;
+    --zambian-copper: 18 85% 47%;
+    --zambian-emerald: 158 64% 52%;
+
+    --sidebar-background: 220 13% 98%;
+    --sidebar-foreground: 220 13% 14%;
+    --sidebar-primary: 18 85% 47%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 18 85% 95%;
+    --sidebar-accent-foreground: 18 85% 47%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 18 85% 47%;
+  }
+
+  .dark {
+    --background: 224 40% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 224 40% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 224 40% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 18 85% 55%;
+    --primary-foreground: 224 40% 8%;
+
+    --secondary: 210 90% 60%;
+    --secondary-foreground: 224 40% 8%;
+
+    --muted: 222 32% 18%;
+    --muted-foreground: 214 20% 72%;
+
+    --accent: 158 64% 60%;
+    --accent-foreground: 224 40% 8%;
+
+    --destructive: 1 75% 52%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 32% 22%;
+    --input: 222 32% 22%;
+    --ring: 18 85% 55%;
+
+    --surface-soft: 224 32% 14%;
+    --surface-strong: 224 32% 18%;
+    --hero-fade: 210 90% 40%;
+    --hero-glow: 158 64% 60%;
+
+    --sidebar-background: 224 40% 6%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 210 90% 60%;
+    --sidebar-primary-foreground: 224 40% 6%;
+    --sidebar-accent: 222 32% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 32% 22%;
+    --sidebar-ring: 210 90% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-image: none;
+  }
+
+  main {
+    @apply relative z-10;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-foreground tracking-tight;
+  }
+
+  a {
+    @apply text-secondary transition-colors hover:text-secondary/80;
+  }
+
+  strong {
+    @apply font-semibold text-foreground;
+  }
+
+  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  pre,
+  code {
+    overflow-x: auto;
+    white-space: pre;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-2xl;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .dark .glass-panel {
+    background: hsl(var(--surface-strong));
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .section-shell {
+    @apply relative isolate overflow-hidden rounded-2xl px-6 py-12 md:px-12 md:py-16;
+    background: hsl(var(--surface-soft));
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .dark .section-shell {
+    background: hsl(var(--surface-strong));
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .section-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: none;
+  }
+
+  .badge-pill {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wide;
+    background: hsl(var(--primary) / 0.08);
+    color: hsl(var(--primary));
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium;
+    border-color: hsl(var(--border));
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .dark .chip {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: hsl(var(--surface-strong));
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .text-muted {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .bg-surface-soft {
+    background-color: hsl(var(--surface-soft));
+  }
+
+  .bg-surface-strong {
+    background-color: hsl(var(--surface-strong));
+  }
+
+  .gradient-mask {
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0));
+  }
+}
