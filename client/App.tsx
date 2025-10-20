@@ -11,6 +11,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import Destinations from "./pages/Destinations";
+import DestinationDetails from "./pages/DestinationDetails";
 import Hotels from "./pages/Hotels";
 import Index from "./pages/Index";
 import Booking from "./pages/Booking";
@@ -30,6 +31,7 @@ const App = () => (
             <Route element={<MainLayout />}>
               <Route path="/" element={<Index />} />
               <Route path="/destinations" element={<Destinations />} />
+              <Route path="/destinations/:name" element={<DestinationDetails />} />
               <Route path="/hotels" element={<Hotels />} />
               <Route path="/search" element={<SearchResults />} />
             </Route>

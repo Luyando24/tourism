@@ -26,12 +26,16 @@ const DestinationCard = ({
   travelSeason,
   highlights,
   rating,
-  href = "/destinations",
+  href,
   price = "From $299",
   duration = "3-5 days",
   activities = 12,
 }: DestinationCardProps) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
+
+  // Generate URL-friendly name for the destination details page
+  const destinationUrl = `/destinations/${name.toLowerCase().replace(/\s+/g, '-')}`;
+  const linkHref = href || destinationUrl;
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1">
@@ -113,10 +117,10 @@ const DestinationCard = ({
 
         <div className="mt-auto">
           <Link
-            to={href}
+            to={linkHref}
             className="w-full flex items-center justify-center gap-2 rounded-lg border border-primary px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-primary transition-colors hover:bg-primary/5 group/link"
           >
-            View Activities
+            View Details
             <ArrowRight className="size-3 sm:size-4 transition-transform group-hover/link:translate-x-1" />
           </Link>
         </div>

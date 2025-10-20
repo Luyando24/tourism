@@ -7,13 +7,13 @@ import {
   MessagesSquare,
   Youtube,
 } from "lucide-react";
-
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const SiteFooter = () => {
+const SiteFooter = ({ className }: { className?: string }) => {
   return (
-    <footer className="relative mt-24 border-t border-border bg-secondary text-foreground">
+    <footer className={cn("relative mt-24 border-t border-border bg-secondary text-foreground", className)}>
       <div className="mx-auto max-w-6xl px-4 py-16">
         <div className="grid gap-12 lg:grid-cols-[1.2fr,_1fr,_1fr,_1fr]">
           <div className="space-y-6">

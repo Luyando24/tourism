@@ -17,6 +17,7 @@ import HotelCard from "@/components/cards/HotelCard";
 import DestinationFilters, { FilterOptions } from "@/components/filters/DestinationFilters";
 import HotelFilters, { HotelFilterOptions } from "@/components/filters/HotelFilters";
 import SortOptions, { SortOption } from "@/components/filters/SortOptions";
+import SearchBar from "@/components/search/SearchBar";
 import { featuredDestinations, premiumStays } from "@/data/content";
 
 type SearchCategory = 'all' | 'destinations' | 'hotels';
@@ -214,14 +215,12 @@ const SearchResults = () => {
           </div>
 
           {/* Search Bar */}
-          <div className="relative max-w-2xl mb-8">
-            <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="text"
+          <div className="max-w-2xl mb-8">
+            <SearchBar
               placeholder="Search destinations, hotels, activities..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 pr-4 py-3 text-lg"
+              showRealTimeResults={true}
+              onSearch={(query) => setSearchQuery(query)}
+              className="w-full"
             />
           </div>
           {/* Category Tabs */}

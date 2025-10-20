@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { MapPin, Star, Clock, Users } from "lucide-react";
+import { MapPin, Star, Clock, Users, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionHeading from "@/components/common/SectionHeading";
 import { Badge } from "@/components/ui/badge";

@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from "react";
-import { MapPin, Search } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { MapPin, Search, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -38,20 +38,43 @@ const DestinationAutocomplete = ({ value, onChange, placeholder = "Search attrac
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(value);
   const [filteredDestinations, setFilteredDestinations] = useState<Destination[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Debounced search function
+  const debouncedSearch = useCallback((term: string) => {
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+
+    setIsLoading(true);
+    
+    debounceTimeoutRef.current = setTimeout(() => {
+      if (term.length > 0) {
+        const filtered = popularDestinations.filter(dest =>
+          dest.name.toLowerCase().includes(term.toLowerCase()) ||
+          dest.region.toLowerCase().includes(term.toLowerCase())
+        );
+        setFilteredDestinations(filtered.slice(0, 8)); // Limit to 8 results
+      } else {
+        setFilteredDestinations(popularDestinations.slice(0, 6)); // Show top 6 when empty
+      }
+      setIsLoading(false);
+    }, 300); // 300ms debounce delay
+  }, []);
 
   useEffect(() => {
-    if (searchTerm.length > 0) {
-      const filtered = popularDestinations.filter(dest =>
-        dest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        dest.region.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredDestinations(filtered.slice(0, 8)); // Limit to 8 results
-    } else {
-      setFilteredDestinations(popularDestinations.slice(0, 6)); // Show top 6 when empty
-    }
-  }, [searchTerm]);
+    debouncedSearch(searchTerm);
+    
+    // Cleanup timeout on unmount
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, [searchTerm, debouncedSearch]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -121,14 +144,21 @@ const DestinationAutocomplete = ({ value, onChange, placeholder = "Search attrac
           className="h-auto border-0 bg-transparent px-0 text-sm sm:text-base font-medium text-foreground placeholder:text-muted-foreground focus-visible:ring-0"
           placeholder={placeholder}
         />
-        {isOpen && (
+        {isLoading ? (
+          <Loader2 className="size-4 text-primary animate-spin" />
+        ) : isOpen ? (
           <Search className="size-4 text-muted-foreground" />
-        )}
+        ) : null}
       </div>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-border rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
-          {filteredDestinations.length > 0 ? (
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-border rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto transition-all duration-200 ease-in-out">
+          {isLoading ? (
+            <div className="p-8 text-center">
+              <Loader2 className="size-6 text-primary animate-spin mx-auto mb-2" />
+              <div className="text-sm text-muted-foreground">Searching destinations...</div>
+            </div>
+          ) : filteredDestinations.length > 0 ? (
             <div className="p-2">
               {searchTerm.length === 0 && (
                 <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
@@ -139,7 +169,7 @@ const DestinationAutocomplete = ({ value, onChange, placeholder = "Search attrac
                 <button
                   key={index}
                   onClick={() => handleDestinationSelect(destination)}
-                  className="w-full flex items-center gap-3 px-3 py-3 rounded-md hover:bg-gray-50 transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-3 rounded-md hover:bg-gray-50 transition-all duration-150 text-left transform hover:scale-[1.02]"
                 >
                   <span className="text-lg">{getTypeIcon(destination.type)}</span>
                   <div className="flex-1 min-w-0">

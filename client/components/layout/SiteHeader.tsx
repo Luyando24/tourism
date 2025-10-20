@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import SearchBar from "@/components/search/SearchBar";
 import CurrencyToggler from "@/components/ui/currency-toggler";
+import UserAccountButton from "@/components/UserAccountButton";
 
 type NavItem = {
   label: string;
@@ -90,17 +91,9 @@ const SiteHeader = () => {
               <Plane className="mr-2 size-4" /> Trips
             </Link>
           </Button>
-          <Button 
-            className="rounded-lg px-6 py-2 text-sm font-semibold bg-primary hover:bg-primary/90 text-white relative"
-            asChild
-          >
-            <Link to="/booking">
-              Yamuloko
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
-                %
-              </span>
-            </Link>
-          </Button>
+          <div className="hidden sm:block">
+            <UserAccountButton />
+          </div>
           <Button
             variant="ghost"
             size="icon"
