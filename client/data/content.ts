@@ -2,7 +2,7 @@ export const featuredDestinations = [
   {
     name: "Victoria Falls",
     image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80",
+      "https://www.discoverafrica.com/wp-content/uploads/2021/11/1-52-1200x800.jpg",
     summary:
       "Witness the Mosi-oa-Tunya — the Smoke that Thunders — with misty rainbows, river safaris, and heritage townships in Livingstone.",
     region: "Livingstone",
@@ -26,7 +26,7 @@ export const featuredDestinations = [
   {
     name: "Liuwa Plain",
     image:
-      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80",
+      "https://safarifrank.com/wp-content/uploads/2018/11/west-zambia-liuwa-plains-wildlife-photography-wildebeest-migration.jpg",
     summary:
       "Follow the second-largest wildebeest migration, sunsets over endless plains, and the cultural legacy of the Lozi kingdom.",
     region: "Western Province",
@@ -129,7 +129,7 @@ export const culturalHighlights = [
     period: "April",
     location: "Mongu",
     image:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
+      "https://cdn.prod.website-files.com/64818ba304cb8031b4b1f140/6661093f22004f08c4541eca_IMG_0309.jpg",
   },
   {
     title: "Nc'wala Festival",
@@ -138,7 +138,7 @@ export const culturalHighlights = [
     period: "February",
     location: "Chipata",
     image:
-      "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1200&q=80",
+      "https://cdn.prod.website-files.com/64818ba304cb8031b4b1f140/66c344bfc5c65153118f0811_Child%20at%20Ncwala%20Ceremony%20.png.png",
   },
   {
     title: "Livingstone Cultural Tram",
@@ -147,7 +147,7 @@ export const culturalHighlights = [
     period: "Year-round",
     location: "Livingstone",
     image:
-      "https://images.unsplash.com/photo-1559589689-577aabd1db4d?auto=format&fit=crop&w=1200&q=80",
+      "https://cdn4.premiumread.com/?url=https://www.mmegi.bw/mmegi/uploads/images/2024/07/19/114710.jpg&w=800&q=72&f=jpg",
   },
 ];
 

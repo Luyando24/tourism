@@ -13,6 +13,7 @@ import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import Destinations from "./pages/Destinations";
 import DestinationDetails from "./pages/DestinationDetails";
 import Hotels from "./pages/Hotels";
+import Food from "./pages/Food";
 import Index from "./pages/Index";
 import Booking from "./pages/Booking";
 import SearchResults from "./pages/SearchResults";
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/destinations" element={<Destinations />} />
               <Route path="/destinations/:name" element={<DestinationDetails />} />
               <Route path="/hotels" element={<Hotels />} />
+              <Route path="/food" element={<Food />} />
               <Route path="/search" element={<SearchResults />} />
             </Route>
             <Route path="/booking" element={<Booking />} />

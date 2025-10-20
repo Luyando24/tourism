@@ -154,27 +154,32 @@ const TravelSearchBar = () => {
             />
           </div>
           
-          <div className="grid flex-1 gap-2">
-            <label className="text-sm font-semibold text-gray-700">
-              {activeTab === "hotels" ? "Check-in & Check-out" : "When are you traveling?"}
-            </label>
-            <DateRangePicker
-              value={values.dates}
-              onChange={(value) => setValues((prev) => ({ ...prev, dates: value }))}
-              placeholder="Select your travel dates"
-            />
-          </div>
-          
-          <div className="grid flex-1 gap-2">
-            <label className="text-sm font-semibold text-gray-700">
-              {activeTab === "hotels" ? "How many guests?" : "How many travelers?"}
-            </label>
-            <GuestSelector
-              value={values.travellers}
-              onChange={(value) => setValues((prev) => ({ ...prev, travellers: value }))}
-              placeholder={activeTab === "hotels" ? "Select guests" : "Select travelers"}
-            />
-          </div>
+          {/* Hide date and guest fields when food tab is active */}
+          {activeTab !== "food" && (
+            <>
+              <div className="grid flex-1 gap-2">
+                <label className="text-sm font-semibold text-gray-700">
+                  {activeTab === "hotels" ? "Check-in & Check-out" : "When are you traveling?"}
+                </label>
+                <DateRangePicker
+                  value={values.dates}
+                  onChange={(value) => setValues((prev) => ({ ...prev, dates: value }))}
+                  placeholder="Select your travel dates"
+                />
+              </div>
+              
+              <div className="grid flex-1 gap-2">
+                <label className="text-sm font-semibold text-gray-700">
+                  {activeTab === "hotels" ? "How many guests?" : "How many travelers?"}
+                </label>
+                <GuestSelector
+                  value={values.travellers}
+                  onChange={(value) => setValues((prev) => ({ ...prev, travellers: value }))}
+                  placeholder={activeTab === "hotels" ? "Select guests" : "Select travelers"}
+                />
+              </div>
+            </>
+          )}
           
           <Button
             type="submit"
