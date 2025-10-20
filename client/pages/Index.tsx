@@ -52,7 +52,7 @@ const Index = () => {
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="absolute inset-0">
           <iframe
-            src="https://www.youtube.com/embed/KIxonNIbxWE?autoplay=1&mute=1&loop=1&playlist=KIxonNIbxWE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0"
+            src="https://www.youtube.com/embed/KIxonNIbxWE?autoplay=0&mute=1&loop=1&playlist=KIxonNIbxWE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0"
             className="absolute top-0 left-0 w-full h-full pointer-events-none"
             style={{
               width: '100vw',
@@ -134,9 +134,11 @@ const Index = () => {
             description="World-class accommodations in Africa's most intimate destinations"
           />
 
-          <div className="mt-12 sm:mt-16 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 sm:mt-16 flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {premiumStays.map((hotel) => (
-              <HotelCard key={hotel.name} {...hotel} />
+              <div key={hotel.name} className="min-w-[70vw] snap-start sm:min-w-0 sm:w-auto">
+                <HotelCard {...hotel} />
+              </div>
             ))}
           </div>
 
@@ -161,9 +163,11 @@ const Index = () => {
             description="Expertly crafted itineraries combining the best of Zambia's wildlife, culture, and adventure"
           />
 
-          <div className="mt-12 sm:mt-16 grid gap-8 grid-cols-1">
+          <div className="mt-12 sm:mt-16 flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory scrollbar-hide">
             {travelPackages.map((pkg) => (
-              <PackageCard key={pkg.id} {...pkg} />
+              <div key={pkg.id} className="min-w-[85vw] sm:min-w-[400px] snap-start">
+                <PackageCard {...pkg} />
+              </div>
             ))}
           </div>
 
@@ -185,7 +189,7 @@ const Index = () => {
             description="Everything you need to know for a seamless Zambian adventure"
           />
 
-          <div className="mt-12 sm:mt-16 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 sm:mt-16 grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
             {travelInsights.map((insight) => {
               const IconComponent = insightIconMap[insight.icon as keyof typeof insightIconMap];
               return (

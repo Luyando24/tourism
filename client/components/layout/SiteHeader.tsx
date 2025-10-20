@@ -51,7 +51,6 @@ const SiteHeader = () => {
         <div className="hidden lg:flex flex-1 max-w-md mx-4">
           <SearchBar className="w-full" />
         </div>
-        
         <nav className="hidden items-center gap-1 lg:flex">
           {navItems.map((item) =>
             item.type === "route" ? (
@@ -115,7 +114,7 @@ const SiteHeader = () => {
       >
         {/* Mobile Search Bar */}
         <div className="px-4 pt-3 pb-2">
-          <SearchBar className="w-full" />
+          {/* Mobile Search Bar removed */}
         </div>
         
         <nav className="flex flex-col gap-1 px-4 py-3">

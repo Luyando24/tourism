@@ -34,8 +34,8 @@ const BottomNav = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border lg:hidden">
-      <div className="flex items-center justify-around">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border lg:hidden h-16">
+      <div className="flex items-center justify-around h-full">
         {navItems.map((item) => {
           const isActive = location.pathname === item.href;
           return (
