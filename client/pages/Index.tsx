@@ -90,9 +90,11 @@ const Index = () => {
             description="From thundering waterfalls to untamed wilderness, discover the places that define Zambia."
           />
 
-          <div className="mt-12 sm:mt-16 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 sm:mt-16 flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {featuredDestinations.map((destination) => (
-              <DestinationCard key={destination.name} {...destination} />
+              <div key={destination.name} className="min-w-[70vw] snap-start sm:min-w-0 sm:w-auto">
+                <DestinationCard {...destination} />
+              </div>
             ))}
           </div>
 
@@ -117,9 +119,11 @@ const Index = () => {
             description="Exclusive Yamuloko discount experiences featuring authentic Zambian culture and adventure"
           />
 
-          <div className="mt-12 sm:mt-16 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 sm:mt-16 flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {signatureExperiences.map((experience) => (
-              <ExperienceCard key={experience.name} {...experience} />
+              <div key={experience.name} className="min-w-[70vw] snap-start sm:min-w-0 sm:w-auto">
+                <ExperienceCard {...experience} />
+              </div>
             ))}
           </div>
         </div>
