@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, Star, MapPin, Clock, Search, Plus, MoreHorizontal, Bookmark } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ChevronRight, Star, MapPin, Clock, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,167 +7,210 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import DestinationAutocomplete from "@/components/forms/DestinationAutocomplete";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from 'react-router-dom';
 
-// Restaurant data
-const restaurantData = {
-  name: "KUNFU PANDA",
-  rating: 4.1,
-  reviewCount: 132,
-  deliveryTime: "55-65 min",
-  deliveryType: "Delivery",
-  minOrder: "100 K",
-  discount: "-10%",
-  discountText: "For orders from 100 K",
-  timer: "TIMER 🔥"
-};
-
-// Food categories matching the screenshot
+// Food categories and sample data
 const foodCategories = [
-  { id: "popular", label: "POPULAR" },
-  { id: "lunch", label: "LUNCH" },
-  { id: "noodles", label: "NOODLES" },
-  { id: "rice-noodles", label: "RICE NOODLES" },
-  { id: "rice", label: "RICE" },
-  { id: "drinks", label: "DRINKS" }
+  {
+    id: "restaurants",
+    label: "Restaurants",
+    items: [
+      {
+        id: 1,
+        name: "KFC Kabulonga",
+        image: "https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?w=400&h=300&fit=crop",
+        rating: 4.2,
+        category: "Fast food",
+        deliveryTime: "50-60 min",
+        location: "Kabulonga, Lusaka",
+        description: "Finger lickin' good fried chicken and sides.",
+        tags: ["Chicken", "Fast Food", "American"]
+      },
+      {
+        id: 2,
+        name: "Pizza Inn Longacres",
+        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+        rating: 4.2,
+        category: "Pizza",
+        deliveryTime: "40-50 min",
+        location: "Longacres, Lusaka",
+        description: "Fresh pizza with quality ingredients and great taste.",
+        tags: ["Pizza", "Italian", "Delivery"]
+      },
+      {
+        id: 3,
+        name: "Hungry Lion Chilumbulu",
+        image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
+        rating: 3.9,
+        category: "Fast food",
+        deliveryTime: "35-45 min",
+        location: "Chilumbulu, Lusaka",
+        description: "Popular local fast food chain with chicken and burgers.",
+        tags: ["Chicken", "Burgers", "Local"]
+      },
+      {
+        id: 4,
+        name: "TIMKET FOODS LEWANIKA",
+        image: "https://images.unsplash.com/photo-1551782450-17144efb9c50?w=400&h=300&fit=crop",
+        rating: 4.3,
+        category: "Fast food",
+        deliveryTime: "50-60 min",
+        location: "Lewanika Road, Lusaka",
+        description: "Quality fast food with local and international options.",
+        tags: ["Fast Food", "Variety", "Quality"]
+      }
+    ]
+  },
+  {
+    id: "traditional",
+    label: "Traditional Food",
+    items: [
+      {
+        id: 1,
+        name: "Zambian Kitchen",
+        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+        rating: 4.9,
+        category: "Traditional",
+        deliveryTime: "45-60 min",
+        location: "Freedom Way, Lusaka",
+        description: "Authentic Zambian cuisine featuring nshima, village chicken, and local vegetables.",
+        tags: ["Authentic", "Local", "Nshima"]
+      },
+      {
+        id: 2,
+        name: "Mama Africa",
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop",
+        rating: 4.6,
+        category: "Traditional",
+        deliveryTime: "50-70 min",
+        location: "Great East Road, Lusaka",
+        description: "Traditional Zambian food with cultural performances on weekends.",
+        tags: ["Cultural", "Entertainment", "Traditional"]
+      }
+    ]
+  },
+  {
+    id: "fastfood",
+    label: "Fast Food",
+    items: [
+      {
+        id: 1,
+        name: "Hungry Lion",
+        image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
+        rating: 4.3,
+        category: "Fast food",
+        deliveryTime: "30-45 min",
+        location: "Multiple locations across Lusaka",
+        description: "Popular fast food chain serving fried chicken and burgers.",
+        tags: ["Chicken", "Quick", "Affordable"]
+      },
+      {
+        id: 2,
+        name: "Debonairs Pizza",
+        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+        rating: 4.4,
+        category: "Pizza",
+        deliveryTime: "35-50 min",
+        location: "East Park Mall, Lusaka",
+        description: "South African pizza chain with unique African-inspired toppings.",
+        tags: ["Pizza", "Delivery", "South African"]
+      }
+    ]
+  }
 ];
 
-// Food items data
-const foodItems = {
-  popular: [
-    {
-      id: 1,
-      name: "Bubble tea 珍珠奶茶",
-      price: "50K",
-      description: "500 ml",
-      image: "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=300&h=200&fit=crop"
-    },
-    {
-      id: 2,
-      name: "Fried rice with chicken 鸡肉炒饭",
-      price: "150K",
-      description: "550 g",
-      image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=200&fit=crop"
-    },
-    {
-      id: 3,
-      name: "Steamed dumplings 蒸饺",
-      price: "80K",
-      description: "6 pieces",
-      image: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=300&h=200&fit=crop"
-    },
-    {
-      id: 4,
-      name: "Beef noodle soup 牛肉面",
-      price: "120K",
-      description: "Large bowl",
-      image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&h=200&fit=crop"
-    }
-  ],
-  lunch: [
-    {
-      id: 5,
-      name: "Lunch combo A",
-      price: "180K",
-      description: "Rice + 2 dishes",
-      image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=200&fit=crop"
-    },
-    {
-      id: 6,
-      name: "Lunch combo B",
-      price: "200K",
-      description: "Noodles + drink",
-      image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&h=200&fit=crop"
-    }
-  ],
-  noodles: [
-    {
-      id: 7,
-      name: "Beef noodles",
-      price: "120K",
-      description: "Spicy beef noodles",
-      image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&h=200&fit=crop"
-    },
-    {
-      id: 8,
-      name: "Chicken noodles",
-      price: "100K",
-      description: "Chicken with vegetables",
-      image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&h=200&fit=crop"
-    }
-  ],
-  "rice-noodles": [
-    {
-      id: 9,
-      name: "Rice noodle soup",
-      price: "90K",
-      description: "Traditional style",
-      image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&h=200&fit=crop"
-    }
-  ],
-  rice: [
-    {
-      id: 10,
-      name: "Fried rice",
-      price: "80K",
-      description: "Egg fried rice",
-      image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=200&fit=crop"
-    }
-  ],
-  drinks: [
-    {
-      id: 11,
-      name: "Bubble tea",
-      price: "50K",
-      description: "Various flavors",
-      image: "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=300&h=200&fit=crop"
-    },
-    {
-      id: 12,
-      name: "Fresh juice",
-      price: "40K",
-      description: "Orange/Apple",
-      image: "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=300&h=200&fit=crop"
-    }
-  ]
-};
+// Featured food items section
+const featuredItems = [
+  {
+    id: 1,
+    name: "Special shawarma",
+    price: "58 K",
+    image: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=150&h=150&fit=crop"
+  },
+  {
+    id: 2,
+    name: "Chicken wings & chips",
+    price: "102 K",
+    image: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=150&h=150&fit=crop"
+  },
+  {
+    id: 3,
+    name: "Plain chips",
+    price: "37 K",
+    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=150&h=150&fit=crop"
+  },
+  {
+    id: 4,
+    name: "Double pizza",
+    price: "89 K",
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=150&h=150&fit=crop"
+  }
+];
 
-const FoodItemCard = ({ item }: { item: any }) => {
+const FoodCard = ({ item }) => {
   return (
-    <Card className="overflow-hidden bg-white border-0 shadow-sm rounded-2xl">
-      <div className="relative">
-        <div className="h-32 w-full overflow-hidden bg-gray-100 rounded-t-2xl">
-          <img 
-            src={item.image} 
-            alt={item.name}
-            className="h-full w-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = "/placeholder.svg";
-            }}
-          />
-        </div>
-        <Button 
-          size="sm" 
-          className="absolute bottom-2 right-2 h-8 w-8 rounded-full bg-white hover:bg-gray-50 text-gray-900 shadow-md border"
-        >
-          <Plus className="h-4 w-4" />
-        </Button>
+    <Card className="group cursor-pointer hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-white rounded-2xl">
+      <div className="relative h-32 sm:h-40 w-full overflow-hidden bg-gray-100">
+        <img 
+          src={item.image} 
+          alt={item.name}
+          className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "/placeholder.svg";
+          }}
+        />
       </div>
-      <CardContent className="p-3">
-        <div className="mb-2">
-          <p className="text-lg font-semibold text-gray-900">{item.price}</p>
-          <h3 className="text-sm font-medium text-gray-900 leading-tight">{item.name}</h3>
-          <p className="text-xs text-gray-500 mt-1">{item.description}</p>
+      <CardContent className="p-3 sm:p-4">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 group-hover:text-orange-500 transition-colors">{item.name}</h3>
+        <p className="text-sm text-gray-600 mb-2">{item.category}</p>
+        
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center">
+            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400 mr-1" />
+            <span className="text-sm font-medium">{item.rating}</span>
+          </div>
+          <div className="flex items-center text-gray-600">
+            <Clock className="h-3 w-3 mr-1" />
+            <span className="text-sm">{item.deliveryTime}</span>
+          </div>
+        </div>
+        
+        <div className="flex items-center text-xs text-gray-500 mb-3">
+          <MapPin className="mr-1 h-3 w-3" />
+          <span className="truncate">{item.location}</span>
         </div>
       </CardContent>
     </Card>
   );
 };
 
+const FeaturedItem = ({ item }) => {
+  return (
+    <div className="flex flex-col items-center p-2 bg-white rounded-xl shadow-sm border-0">
+      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-gray-100 mb-2">
+        <img 
+          src={item.image} 
+          alt={item.name}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "/placeholder.svg";
+          }}
+        />
+      </div>
+      <div className="text-center">
+        <p className="text-lg sm:text-xl font-bold text-gray-900 mb-1">{item.price}</p>
+        <p className="text-xs sm:text-sm text-gray-600 leading-tight">{item.name}</p>
+      </div>
+    </div>
+  );
+};
+
 const Food = () => {
-  const [activeTab, setActiveTab] = useState("popular");
+  const [activeTab, setActiveTab] = useState("restaurants");
   const [searchLocation, setSearchLocation] = useState("Lusaka, Zambia");
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   // Get user's geolocation when component mounts
   useEffect(() => {
@@ -176,17 +218,35 @@ const Food = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           try {
+            // For demo purposes, we'll set a default Zambian location
+            // In a real app, you would use the coordinates to fetch the actual location name
             setSearchLocation("Lusaka, Zambia");
           } catch (error) {
             console.error("Error getting location:", error);
+            toast({
+              title: "Location Error",
+              description: "Could not determine your location. Please enter it manually.",
+              variant: "destructive",
+            });
           }
         },
         (error) => {
           console.error("Geolocation error:", error);
+          toast({
+            title: "Location Access Denied",
+            description: "Please enable location access or enter your location manually.",
+            variant: "destructive",
+          });
         }
       );
+    } else {
+      toast({
+        title: "Geolocation Not Supported",
+        description: "Your browser doesn't support geolocation. Please enter your location manually.",
+        variant: "destructive",
+      });
     }
-  }, []);
+  }, [toast]);
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();
@@ -197,112 +257,98 @@ const Food = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header with Back Button and Actions */}
-      <div className="sticky top-0 z-50 bg-white border-b border-gray-100">
-        <div className="flex items-center justify-between px-4 py-3">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate(-1)}
-            className="p-2"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="p-2">
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="sm" className="p-2">
-              <Bookmark className="h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Restaurant Info Header */}
-      <div className="px-4 py-6 bg-white">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{restaurantData.name}</h1>
-        
-        <div className="flex items-center gap-4 mb-4">
-          <div className="flex items-center">
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-            <span className="text-sm font-medium">{restaurantData.rating}</span>
-            <span className="text-sm text-gray-500 ml-1">{restaurantData.reviewCount} ratings</span>
+    <div className="min-h-screen bg-gray-50">
+      {/* Improved Food Search Section */}
+      <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">Craving Something Delicious?</h1>
+            <p className="text-orange-100 text-lg">Find the best restaurants and food near you</p>
           </div>
           
-          <div className="flex items-center text-gray-600">
-            <Clock className="h-4 w-4 mr-1" />
-            <span className="text-sm">{restaurantData.deliveryTime}</span>
-          </div>
-          
-          <Button variant="ghost" size="sm" className="p-1">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Delivery Info and Promotion */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Badge variant="destructive" className="bg-red-500 text-white">
-              {restaurantData.discount}
-            </Badge>
-            <span className="text-sm text-gray-600">{restaurantData.discountText}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">from {restaurantData.minOrder}</span>
-            <span className="text-sm">{restaurantData.timer}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Category Tabs */}
-      <div className="sticky top-16 z-40 bg-white border-b border-gray-100">
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="w-full justify-start bg-transparent p-0 h-auto overflow-x-auto">
-            <div className="flex gap-0 px-4 py-2 min-w-max">
-              {foodCategories.map((category) => (
-                <TabsTrigger 
-                  key={category.id} 
-                  value={category.id}
-                  className="px-4 py-2 text-sm font-medium whitespace-nowrap border-b-2 border-transparent data-[state=active]:border-gray-900 data-[state=active]:bg-transparent bg-transparent text-gray-600 data-[state=active]:text-gray-900 rounded-none"
-                >
-                  {category.label}
-                </TabsTrigger>
-              ))}
-            </div>
-          </TabsList>
-
-          {/* Food Items Content */}
-          <div className="px-4 py-6">
-            {foodCategories.map((category) => (
-              <TabsContent key={category.id} value={category.id} className="mt-0">
-                <div className="grid grid-cols-2 gap-4">
-                  {foodItems[category.id as keyof typeof foodItems]?.map((item) => (
-                    <FoodItemCard key={item.id} item={item} />
-                  ))}
+          <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
+            <div className="bg-white rounded-2xl p-2 shadow-lg">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <div className="flex-1">
+                  <div className="relative">
+                    <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <DestinationAutocomplete
+                      value={searchLocation}
+                      onChange={setSearchLocation}
+                      placeholder="Enter delivery location"
+                      className="pl-12 h-14 text-base border-0 rounded-xl bg-gray-50 focus:bg-white transition-colors"
+                    />
+                  </div>
                 </div>
-              </TabsContent>
+                <Button 
+                  type="submit" 
+                  className="h-14 px-8 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all"
+                >
+                  <Search className="h-5 w-5 mr-2" />
+                  Find Food
+                </Button>
+              </div>
+            </div>
+          </form>
+          
+          {/* Quick filters */}
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            {["Fast Food", "Pizza", "Traditional", "Chinese", "Indian"].map((filter) => (
+              <Button
+                key={filter}
+                variant="outline"
+                size="sm"
+                className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-orange-500 rounded-full px-4 py-2"
+              >
+                {filter}
+              </Button>
             ))}
           </div>
-        </Tabs>
+        </div>
       </div>
 
-      {/* Delivery Info Footer */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 lg:hidden">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
-              <span className="text-xs">🚲</span>
-            </div>
-            <div>
-              <p className="text-sm font-medium">Delivery K 1 • {restaurantData.deliveryTime}</p>
-              <p className="text-xs text-gray-500">Detailed conditions</p>
-            </div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Tabs defaultValue="restaurants" value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="mb-6 w-full bg-white rounded-xl p-1 shadow-sm border-0">
+            {foodCategories.map((category) => (
+              <TabsTrigger 
+                key={category.id} 
+                value={category.id} 
+                className="flex-1 rounded-lg data-[state=active]:bg-orange-500 data-[state=active]:text-white text-gray-600 font-medium"
+              >
+                {category.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          {foodCategories.map((category) => (
+            <TabsContent key={category.id} value={category.id} className="mt-0">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+                {category.items.map((item) => (
+                  <Link key={item.id} to="/restaurant" state={{ restaurant: item }}>
+                    <FoodCard item={item} />
+                  </Link>
+                ))}
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
+
+        {/* Featured Section */}
+        <div className="mt-8 bg-white rounded-2xl p-4 shadow-sm border-0">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">Mcsimons Foodcorner Int...</h2>
+            <Button variant="ghost" size="sm" className="text-gray-600">
+              More
+            </Button>
           </div>
-          <Button variant="ghost" size="sm">
-            <span className="text-sm">›</span>
-          </Button>
+          
+          <div className="grid grid-cols-4 gap-3">
+            {featuredItems.map((item) => (
+              <FeaturedItem key={item.id} item={item} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -10,6 +10,8 @@ import {
   Leaf,
   Star,
   Award,
+  Utensils,
+  Clock,
 } from "lucide-react";
 
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -45,9 +47,64 @@ const insightIconMap = {
   leaf: Leaf,
 } as const;
 
+// Featured restaurants and food items
+const featuredRestaurants = [
+  {
+    id: 1,
+    name: "KFC Kabulonga",
+    image: "https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?w=400&h=300&fit=crop",
+    rating: 4.2,
+    category: "Fast food",
+    deliveryTime: "50-60 min",
+    location: "Kabulonga, Lusaka",
+    description: "Finger lickin' good fried chicken and sides.",
+    tags: ["Chicken", "Fast Food", "American"]
+  },
+  {
+    id: 2,
+    name: "Pizza Inn Longacres",
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
+    rating: 4.2,
+    category: "Pizza",
+    deliveryTime: "40-50 min",
+    location: "Longacres, Lusaka",
+    description: "Fresh pizza with quality ingredients and great taste.",
+    tags: ["Pizza", "Italian", "Delivery"]
+  },
+  {
+    id: 3,
+    name: "Zambian Kitchen",
+    image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+    rating: 4.9,
+    category: "Traditional",
+    deliveryTime: "45-60 min",
+    location: "Freedom Way, Lusaka",
+    description: "Authentic Zambian cuisine featuring nshima, village chicken, and local vegetables.",
+    tags: ["Authentic", "Local", "Nshima"]
+  },
+  {
+    id: 4,
+    name: "Hungry Lion Chilumbulu",
+    image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
+    rating: 3.9,
+    category: "Fast food",
+    deliveryTime: "35-45 min",
+    location: "Chilumbulu, Lusaka",
+    description: "Popular local fast food chain with chicken and burgers.",
+    tags: ["Chicken", "Burgers", "Local"]
+  }
+];
+
 const Index = () => {
   return (
     <div className="bg-background">
+      {/* YANGO Badge */}
+      <div className="fixed top-4 right-4 z-50">
+        <Badge variant="secondary" className="bg-orange-500 text-white hover:bg-orange-600 px-3 py-1 text-sm font-semibold shadow-lg">
+          YANGO
+        </Badge>
+      </div>
+
       {/* Hero Section */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="absolute inset-0">
@@ -152,6 +209,72 @@ const Index = () => {
               className="inline-flex items-center gap-2 rounded-lg border border-border bg-white px-8 py-3 font-semibold text-foreground transition hover:bg-secondary"
             >
               Browse All Properties
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Foods & Restaurants Near Me */}
+      <section className="relative px-4 py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-orange-50 to-red-50">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeading
+            badge="Local Flavors"
+            title="Foods & Restaurants Near You"
+            description="Discover delicious local cuisine and popular restaurants in your area"
+          />
+
+          <div className="mt-12 sm:mt-16 flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+            {featuredRestaurants.map((restaurant) => (
+              <div key={restaurant.id} className="min-w-[70vw] snap-start sm:min-w-0 sm:w-auto">
+                <Link to="/restaurant" state={{ restaurant }}>
+                  <div className="group cursor-pointer hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-white rounded-2xl overflow-hidden">
+                    <div className="relative h-32 sm:h-40 w-full overflow-hidden bg-gray-100">
+                      <img 
+                        src={restaurant.image} 
+                        alt={restaurant.name}
+                        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "/placeholder.svg";
+                        }}
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-orange-500 transition-colors">{restaurant.name}</h3>
+                      <p className="text-sm text-gray-600 mb-2">{restaurant.category}</p>
+                      
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center">
+                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                          <span className="text-sm font-medium">{restaurant.rating}</span>
+                        </div>
+                        <div className="flex items-center text-gray-600">
+                          <Clock className="h-4 w-4 mr-1" />
+                          <span className="text-sm">{restaurant.deliveryTime}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center text-xs text-gray-500 mb-3">
+                        <MapPin className="mr-1 h-3 w-3" />
+                        <span className="truncate">{restaurant.location}</span>
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 line-clamp-2">{restaurant.description}</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 sm:mt-16 text-center">
+            <Link
+              to="/food"
+              className="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-8 py-3 font-semibold text-white transition hover:bg-orange-600"
+            >
+              <Utensils className="size-4" />
+              Explore All Restaurants
               <ArrowRight className="size-4" />
             </Link>
           </div>

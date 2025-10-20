@@ -43,11 +43,18 @@ const BottomNav = () => {
               key={item.href}
               to={item.href}
               className={cn(
-                "flex flex-col items-center py-2 px-3 min-w-[4rem]",
+                "flex flex-col items-center py-2 px-3 min-w-[4rem] relative",
                 isActive ? "text-primary" : "text-muted-foreground"
               )}
             >
-              <item.icon className={cn("h-6 w-6", isActive ? "text-primary" : "text-muted-foreground")} />
+              <div className="relative">
+                <item.icon className={cn("h-6 w-6", isActive ? "text-primary" : "text-muted-foreground")} />
+                {item.label === "Food" && (
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse">
+                    <div className="absolute inset-0 w-3 h-3 bg-orange-500 rounded-full animate-ping opacity-75"></div>
+                  </div>
+                )}
+              </div>
               <span className="text-xs mt-1 font-medium">{item.label}</span>
             </Link>
           );
