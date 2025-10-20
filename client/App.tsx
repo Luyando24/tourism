@@ -16,6 +16,9 @@ import Hotels from "./pages/Hotels";
 import Food from "./pages/Food";
 import Restaurant from "./pages/Restaurant";
 import Taxi from "./pages/Taxi";
+import Flights from "./pages/Flights";
+import Trains from "./pages/Trains";
+import Explore from "./pages/Explore";
 import Index from "./pages/Index";
 import Booking from "./pages/Booking";
 import SearchResults from "./pages/SearchResults";
@@ -39,6 +42,9 @@ const App = () => (
               <Route path="/food" element={<Food />} />
               <Route path="/restaurant" element={<Restaurant />} />
               <Route path="/taxi" element={<Taxi />} />
+              <Route path="/flights" element={<Flights />} />
+              <Route path="/trains" element={<Trains />} />
+              <Route path="/explore" element={<Explore />} />
               <Route path="/search" element={<SearchResults />} />
             </Route>
             <Route path="/booking" element={<Booking />} />

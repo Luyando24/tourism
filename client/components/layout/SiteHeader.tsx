@@ -42,8 +42,8 @@ const SiteHeader = () => {
             Z
           </span>
           <span className="hidden flex-col sm:flex">
-            <span className="text-base font-bold tracking-tight text-foreground">ZamVoyage</span>
-            <span className="text-xs font-medium text-muted-foreground">Tourism</span>
+            <span className="text-base font-bold tracking-tight text-foreground">Zamora</span>
+            <span className="text-xs font-medium text-muted-foreground">Explore Zambia</span>
           </span>
         </Link>
         

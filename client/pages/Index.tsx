@@ -109,7 +109,7 @@ const Index = () => {
       <section className="relative isolate overflow-hidden border-b border-border">
         <div className="absolute inset-0">
           <iframe
-            src="https://www.youtube.com/embed/KIxonNIbxWE?autoplay=0&mute=1&loop=1&playlist=KIxonNIbxWE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0"
+            src="https://www.youtube.com/embed/KIxonNIbxWE?autoplay=1&mute=1&loop=1&playlist=KIxonNIbxWE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=0"
             className="absolute top-0 left-0 w-full h-full pointer-events-none"
             style={{
               width: '100vw',
@@ -167,14 +167,24 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Signature Experiences */}
-      <section id="experiences" className="relative bg-secondary px-4 py-16 sm:py-20 lg:py-24">
+      {/* Yamuloko Partnership */}
+      <section id="experiences" className="relative bg-gradient-to-br from-zambian-gold/10 to-zambian-emerald/10 px-4 py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading
-            badge="Yamuloko"
-            title="Signature Experiences"
-            description="Exclusive Yamuloko discount experiences featuring authentic Zambian culture and adventure"
-          />
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 rounded-full bg-zambian-gold/20 px-4 py-2 text-sm font-semibold text-zambian-gold mb-4">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-zambian-gold opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-zambian-gold"></span>
+              </span>
+              Partnership with Zambian Tourism Agency
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Yamuloko Experiences
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Authentic Zambian adventures crafted in partnership with local communities
+            </p>
+          </div>
 
           <div className="mt-12 sm:mt-16 flex overflow-x-auto pb-4 space-x-4 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {signatureExperiences.map((experience) => (
@@ -182,6 +192,16 @@ const Index = () => {
                 <ExperienceCard {...experience} />
               </div>
             ))}
+          </div>
+
+          <div className="mt-12 sm:mt-16 text-center">
+            <Link
+              to="/experiences"
+              className="inline-flex items-center gap-3 rounded-xl bg-zambian-gold px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-zambian-gold/90 hover:shadow-lg hover:shadow-zambian-gold/25 transform hover:-translate-y-1"
+            >
+              <span>Explore All Yamuloko Offers</span>
+              <ArrowRight className="size-5" />
+            </Link>
           </div>
         </div>
       </section>
@@ -377,7 +397,7 @@ const Index = () => {
           <SectionHeading
             badge="Guest Reviews"
             title="Traveller Stories"
-            description="Hear from adventurers who've discovered Zambia through ZamVoyage"
+            description="Hear from adventurers who've discovered Zambia through Zamora"
           />
 
           <div className="mt-12 sm:mt-16 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

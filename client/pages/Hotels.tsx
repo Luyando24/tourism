@@ -22,7 +22,7 @@ const Hotels = () => {
   const enhancedHotels = premiumStays.map(hotel => ({
     ...hotel,
     priceRange: (() => {
-      const price = parseInt(hotel.pricePerNight.replace(/[$,]/g, ''));
+      const price = hotel.pricePerNightUSD || 0;
       if (price >= 900) return 'Ultra-luxury ($900+/night)';
       if (price >= 600) return 'Luxury ($600-900/night)';
       if (price >= 300) return 'Mid-range ($300-600/night)';

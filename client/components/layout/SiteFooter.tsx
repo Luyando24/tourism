@@ -22,8 +22,8 @@ const SiteFooter = ({ className }: { className?: string }) => {
                 Z
               </span>
               <div>
-                <p className="font-semibold">ZamVoyage</p>
-                <p className="text-sm text-muted-foreground">Tourism Platform</p>
+                <p className="font-semibold">Zamora</p>
+                <p className="text-sm text-muted-foreground">Explore Zambia Platform</p>
               </div>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
@@ -34,7 +34,7 @@ const SiteFooter = ({ className }: { className?: string }) => {
             <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-2">
                 <MessagesSquare className="size-4" />
-                support@zamvoyage.com
+                support@zamora.com
               </span>
               <span className="flex items-center gap-2">
                 <MapPinned className="size-4" /> Lusaka, Zambia
@@ -136,7 +136,7 @@ const SiteFooter = ({ className }: { className?: string }) => {
         </div>
         <div className="mt-10 flex flex-col gap-6 border-t border-border px-0 py-6 text-sm text-muted-foreground xl:flex-row xl:items-center xl:justify-between">
           <p>
-            &copy; {new Date().getFullYear()} ZamVoyage. Crafted in partnership with
+            &copy; {new Date().getFullYear()} Zamora. Crafted in partnership with
             Zambia Tourism Board.
           </p>
           <div className="flex flex-wrap items-center gap-4">

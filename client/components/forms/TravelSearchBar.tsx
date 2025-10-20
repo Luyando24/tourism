@@ -13,6 +13,11 @@ interface TravelSearchBarValues {
   destination: string;
   dates: string;
   travellers: string;
+  // Flight-specific fields
+  departure?: string;
+  arrival?: string;
+  // Rides-specific fields
+  pickupLocation?: string;
 }
 
 type SearchTab = "destinations" | "hotels" | "experiences" | "food" | "rides" | "flights" | "trains";
@@ -25,6 +30,9 @@ const TravelSearchBar = () => {
     destination: "Victoria Falls",
     dates: "25 Nov - 02 Dec",
     travellers: "2 Adults",
+    departure: "",
+    arrival: "",
+    pickupLocation: "",
   });
   const [userLocation, setUserLocation] = useState<string>("");
 
@@ -86,16 +94,15 @@ const TravelSearchBar = () => {
       return;
     }
     
-    // For Flights and Trains, show a toast message (placeholder functionality)
-    if (activeTab === "flights" || activeTab === "trains") {
-      let serviceName = "service";
-      if (activeTab === "flights") serviceName = "flight";
-      else if (activeTab === "trains") serviceName = "train";
-      
-      toast({
-        title: `${serviceName.charAt(0).toUpperCase() + serviceName.slice(1)} booking coming soon!`,
-        description: `We're working on integrating ${serviceName} booking services. Stay tuned!`,
-      });
+    if (activeTab === "flights") {
+      // Navigate to flights page
+      navigate("/flights");
+      return;
+    }
+    
+    if (activeTab === "trains") {
+      // Navigate to trains page
+      navigate("/trains");
       return;
     }
     
@@ -206,6 +213,68 @@ const TravelSearchBar = () => {
                   </div>
                 </div>
               </>
+            ) : activeTab === "flights" ? (
+              <>
+                {/* Flight Form Fields - Row Layout on Desktop */}
+                <div className="flex flex-col md:flex-row md:gap-4 space-y-4 md:space-y-0">
+                  {/* Departure Field */}
+                  <div className="flex-1 space-y-2">
+                    <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                      <Plane className="w-4 h-4 text-blue-500" />
+                      From
+                    </label>
+                    <DestinationAutocomplete
+                      value={values.departure || ""}
+                      onChange={(value) => setValues((prev) => ({ ...prev, departure: value }))}
+                      placeholder="Departure city or airport"
+                    />
+                  </div>
+                  
+                  {/* Arrival Field */}
+                  <div className="flex-1 space-y-2">
+                    <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                      To
+                    </label>
+                    <DestinationAutocomplete
+                      value={values.arrival || ""}
+                      onChange={(value) => setValues((prev) => ({ ...prev, arrival: value }))}
+                      placeholder="Arrival city or airport"
+                    />
+                  </div>
+                </div>
+              </>
+            ) : activeTab === "trains" ? (
+              <>
+                {/* Train Form Fields - Row Layout on Desktop */}
+                <div className="flex flex-col md:flex-row md:gap-4 space-y-4 md:space-y-0">
+                  {/* Departure Field */}
+                  <div className="flex-1 space-y-2">
+                    <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                      <Train className="w-4 h-4 text-green-600" />
+                      From
+                    </label>
+                    <DestinationAutocomplete
+                      value={values.departure || ""}
+                      onChange={(value) => setValues((prev) => ({ ...prev, departure: value }))}
+                      placeholder="Departure station or city"
+                    />
+                  </div>
+                  
+                  {/* Arrival Field */}
+                  <div className="flex-1 space-y-2">
+                    <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-green-600"></div>
+                      To
+                    </label>
+                    <DestinationAutocomplete
+                      value={values.arrival || ""}
+                      onChange={(value) => setValues((prev) => ({ ...prev, arrival: value }))}
+                      placeholder="Arrival station or city"
+                    />
+                  </div>
+                </div>
+              </>
             ) : (
               <>
                 <label className="text-sm font-semibold text-gray-700">
@@ -263,7 +332,7 @@ const TravelSearchBar = () => {
             className="h-[56px] w-full rounded-lg bg-primary px-8 text-base font-semibold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl md:w-auto mt-4 md:mt-0"
           >
             <Search className="mr-2 size-5" />
-            Find {activeTab === "destinations" ? "Places" : activeTab === "hotels" ? "Hotels" : activeTab === "experiences" ? "Experiences" : activeTab === "food" ? "Food" : "Rides"}
+            Find {activeTab === "destinations" ? "Places" : activeTab === "hotels" ? "Hotels" : activeTab === "experiences" ? "Experiences" : activeTab === "food" ? "Food" : activeTab === "rides" ? "Rides" : activeTab === "flights" ? "Flights" : "Trains"}
           </Button>
         </div>
       </form>

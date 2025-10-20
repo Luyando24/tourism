@@ -9,6 +9,7 @@ export const featuredDestinations = [
     travelSeason: "June – August",
     highlights: ["Sunset Zambezi cruise", "Helicopter flight", "Moonbow viewing"],
     rating: 4.9,
+    priceUSD: 299,
     href: "/destinations",
   },
   {
@@ -21,6 +22,7 @@ export const featuredDestinations = [
     travelSeason: "April – October",
     highlights: ["Canoe safari", "Sunrise game drive", "Riverbank sundowners"],
     rating: 4.8,
+    priceUSD: 450,
     href: "/destinations",
   },
   {
@@ -33,6 +35,7 @@ export const featuredDestinations = [
     travelSeason: "October – December",
     highlights: ["Wildebeest migration", "Birding paradise", "Traditional ceremonies"],
     rating: 4.7,
+    priceUSD: 380,
     href: "/destinations",
   },
 ];
@@ -47,9 +50,9 @@ export const signatureExperiences = [
     duration: "4 days • 3 nights",
     style: "Yamuloko",
     rating: 4.9,
-    priceUSD: 1180,
-    originalPriceUSD: 1480,
-    discount: "20% off",
+    priceUSD: 890,
+    originalPriceUSD: 1180,
+    discount: "25% off",
     href: "/#experiences",
   },
   {
@@ -61,9 +64,9 @@ export const signatureExperiences = [
     duration: "6 days • 5 nights",
     style: "Yamuloko",
     rating: 4.8,
-    priceUSD: 1880,
-    originalPriceUSD: 2350,
-    discount: "20% off",
+    priceUSD: 1450,
+    originalPriceUSD: 1880,
+    discount: "23% off",
     href: "/#experiences",
   },
   {
@@ -75,9 +78,9 @@ export const signatureExperiences = [
     duration: "3 days • 2 nights",
     style: "Yamuloko",
     rating: 4.7,
-    priceUSD: 784,
-    originalPriceUSD: 980,
-    discount: "20% off",
+    priceUSD: 590,
+    originalPriceUSD: 784,
+    discount: "25% off",
     href: "/#experiences",
   },
 ];

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import RatingStars from "@/components/common/RatingStars";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface DestinationCardProps {
   name: string;
@@ -13,7 +14,7 @@ interface DestinationCardProps {
   highlights: string[];
   rating: number;
   href?: string;
-  price?: string;
+  priceUSD?: number;
   duration?: string;
   activities?: number;
 }
@@ -27,11 +28,12 @@ const DestinationCard = ({
   highlights,
   rating,
   href,
-  price = "From $299",
+  priceUSD = 299,
   duration = "3-5 days",
   activities = 12,
 }: DestinationCardProps) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const { formatPrice } = useCurrency();
 
   // Generate URL-friendly name for the destination details page
   const destinationUrl = `/destinations/${name.toLowerCase().replace(/\s+/g, '-')}`;
@@ -85,7 +87,7 @@ const DestinationCard = ({
         <div className="space-y-2">
           <div className="flex items-start justify-between gap-2">
             <h3 className="text-lg sm:text-xl font-bold text-foreground leading-tight">{name}</h3>
-            <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">{price}</span>
+            <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">From {formatPrice(priceUSD)}</span>
           </div>
           <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">{summary}</p>
         </div>
